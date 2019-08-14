@@ -15,7 +15,7 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<?php if (!Mage::helper('core/cookie')->isUserNotAllowSaveCookie()): ?>
+<?php //if (!Mage::helper('core/cookie')->isUserNotAllowSaveCookie()): ?>
 <?php $accountId = Mage::getStoreConfig(SOAP_ShoppingAnalytics_Helper_Data::XML_PATH_SHOPPING_ACCOUNT) ?>
 
 <!-- BEGIN SHOPPING ROI CODE -->
@@ -30,4 +30,4 @@
 
 <?php echo $this->_addGoogleTrackingCode() ?>
 
-<?php endif; ?>
+<?php //endif; ?>

@@ -29,6 +29,9 @@ class SOAP_ShoppingAnalytics_Helper_Data extends Mage_Core_Helper_Abstract
     
     const XML_PATH_TRACKING_ACTIVE  = 'shopping/tracking/active';
     const XML_PATH_TRACKING_ACCOUNT = 'shopping/tracking/account';
+    
+    const XML_PATH_MSTRACKING_ACTIVE  = 'shopping/mstracking/active';
+    const XML_PATH_MSTRACKING_ACCOUNT = 'shopping/mstracking/domain';
 
     public function isShoppingAnalyticsAvailable($store = null)
     {
@@ -40,5 +43,11 @@ class SOAP_ShoppingAnalytics_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $accountId = Mage::getStoreConfig(self::XML_PATH_TRACKING_ACCOUNT, $store);
         return $accountId && Mage::getStoreConfigFlag(self::XML_PATH_TRACKING_ACTIVE, $store);
+    }
+    
+    public function isMicrosoftTrackingAvailable($store = null)
+    {
+        $accountId = Mage::getStoreConfig(self::XML_PATH_MSTRACKING_ACCOUNT, $store);
+        return $accountId && Mage::getStoreConfigFlag(self::XML_PATH_MSTRACKING_ACTIVE, $store);
     }
 }

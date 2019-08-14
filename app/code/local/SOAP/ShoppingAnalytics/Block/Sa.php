@@ -140,23 +140,54 @@ var google_conversion_label = "'.$label.'";
     conversion/'.$id.'/?value='.$value.'
     &label='.$label.'&script=0">
 </noscript>
-<!-- END Google Tracking Code -->';
+<!-- END Google Tracking Code -->
+';
             }
         }
     }
 
+    protected function _addMicrosoftTrackingCode() {
+        $domainid = Mage::getStoreConfig('shopping/mstracking/domain');
+        $cp       = Mage::getStoreConfig('shopping/mstracking/cp');
+        return '
+<!-- Microsoft adCenter Tracking -->
+<SCRIPT>
+    microsoft_adcenterconversion_domainid = '.$domainid.';
+    microsoft_adcenterconversion_cp = '.$cp.'; 
+    microsoft_adcenterconversionparams = new Array();
+    microsoft_adcenterconversionparams[0] = "dedup=1";
+</SCRIPT>
+<SCRIPT SRC="https://0.r.msn.com/scripts/microsoft_adcenterconversion.js"></SCRIPT>
+<NOSCRIPT>
+    <IMG width=1 height=1 SRC="https://'.$domainid.'.r.msn.com/?type=1&cp=1&dedup=1"/>
+</NOSCRIPT>
+<a href="http://advertising.msn.com/MSNadCenter/LearningCenter/adtracking.asp" target="_blank">::adCenter::</a>
+<!-- END Microsoft adCenter Tracking -->
+            
+        ';
+    }
+
     protected function _toHtml()
     {
-        if (!Mage::helper('shoppinganalytics')->isShoppingAnalyticsAvailable() && !Mage::helper('shoppinganalytics')->isGoogleTrackingAvailable()) {
+        $output = '';
+        if (!Mage::helper('shoppinganalytics')->isShoppingAnalyticsAvailable() && !Mage::helper('shoppinganalytics')->isGoogleTrackingAvailable() 
+            && !Mage::helper('shoppinganalytics')->isMicrosoftTrackingAvailable()) {
             return '';
         }
         elseif (Mage::helper('shoppinganalytics')->isShoppingAnalyticsAvailable())
         {
-            return parent::_toHtml();
+            $output .= parent::_toHtml();
         }
         elseif (Mage::helper('shoppinganalytics')->isGoogleTrackingAvailable()) {
-            return $this->_addGoogleTrackingCode();
+            $output .= $this->_addGoogleTrackingCode();
         }
+        
+        if ((Mage::helper('shoppinganalytics')->isMicrosoftTrackingAvailable()))
+        {
+            $output .= $this->_addMicrosoftTrackingCode();
+        }
+        
+        return $output;
     }
 }
 
