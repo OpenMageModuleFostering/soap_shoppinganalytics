@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * @category    Mage
+ * @package     SOAP_ShoppingAnalytics
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <SOAP_ShoppingAnalytics>
+            <version>1.0</version>
+        </SOAP_ShoppingAnalytics>
+    </modules>
+    <global>
+        <models>
+            <shoppinganalytics>
+                <class>SOAP_ShoppingAnalytics_Model</class>
+            </shoppinganalytics>
+        </models>
+        <blocks>
+            <shoppinganalytics>
+                <class>SOAP_ShoppingAnalytics_Block</class>
+            </shoppinganalytics>
+        </blocks>
+        <helpers>
+            <shoppinganalytics>
+                <class>SOAP_ShoppingAnalytics_Helper</class>
+            </shoppinganalytics>
+        </helpers>
+    </global>
+    <frontend>
+        <translate>
+            <modules>
+                <SOAP_ShoppingAnalytics>
+                    <files>
+                        <default>SOAP_ShoppingAnalytics.csv</default>
+                    </files>
+                </SOAP_ShoppingAnalytics>
+            </modules>
+        </translate>
+        <events>
+            <checkout_onepage_controller_success_action>
+                <observers>
+                    <shoppinganalytics_order_success>
+                        <class>shoppinganalytics/observer</class>
+                        <method>setShoppingAnalyticsOnOrderSuccessPageView</method>
+                    </shoppinganalytics_order_success>
+                </observers>
+            </checkout_onepage_controller_success_action>
+            <checkout_multishipping_controller_success_action>
+                <observers>
+                    <shoppinganalytics_order_success>
+                        <class>shoppinganalytics/observer</class>
+                        <method>setShoppingAnalyticsOnOrderSuccessPageView</method>
+                    </shoppinganalytics_order_success>
+                </observers>
+            </checkout_multishipping_controller_success_action>
+            <shoppingcheckout_block_link_html_before>
+                <observers>
+                    <shoppinganalytics_shoppingcheckout_integration>
+                        <class>shoppinganalytics/observer</class>
+                        <method>injectAnalyticsInShoppingCheckoutLink</method>
+                    </shoppinganalytics_shoppingcheckout_integration>
+                </observers>
+            </shoppingcheckout_block_link_html_before>
+        </events>
+        <layout>
+            <updates>
+                <shoppinganalytics>
+                    <file>shoppinganalytics.xml</file>
+                </shoppinganalytics>
+            </updates>
+        </layout>
+    </frontend>
+    <adminhtml>
+        <translate>
+            <modules>
+                <SOAP_ShoppingAnalytics>
+                    <files>
+                        <default>SOAP_ShoppingAnalytics.csv</default>
+                    </files>
+                </SOAP_ShoppingAnalytics>
+            </modules>
+        </translate>
+    </adminhtml>
+</config>

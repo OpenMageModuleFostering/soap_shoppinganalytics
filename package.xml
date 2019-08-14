@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package>
+    <name>SOAP_ShoppingAnalytics</name>
+    <version>1.0.0</version>
+    <stability>stable</stability>
+    <license uri="http://www.gnu.org/licenses/gpl.html">GNU General Public License</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>ROI Tracker - Tracks Conversion data to third party platforms</summary>
+    <description>Adds the option to enable third party ROI Tracking; Adwords conversion tracking code and Shopping.com ROI tracker code&#xD;
+&#xD;
+&#xD;
+The Magento ROI Tracker enables the option to easily manage Adwords conversion tracking code on the Magento thanks you / order completion page. It also has the option to enable the Shopping.com tracking code and in future we will look to add support for other third party ROI tracking tools.&#xD;
+&#xD;
+To keep up to date follow the our &lt;a href="http://www.soapmedia.co.uk/magento-roi-tracking-extension/"&gt;Mangeto ROI Tracking&lt;/a&gt; post on our blog</description>
+    <notes>Soap Roi Tracker</notes>
+    <authors><author><name>Soap Media</name><user>toocanx</user><email>adam@soapmedia.co.uk</email></author></authors>
+    <date>2012-10-12</date>
+    <time>13:27:21</time>
+    <contents><target name="magelocal"><dir><dir name="SOAP"><dir><dir name="ShoppingAnalytics"><dir name="Block"><file name="Hint.php" hash="072d7b20b293ac5bc8352221c095820b"/><file name="Sa.php" hash="378ffaa629ad08c5887af7c3ecea807b"/></dir><dir name="Helper"><file name="Data.php" hash="7c5e58f47122354512bc2635d7ff0e0a"/></dir><dir name="Model"><file name="Observer.php" hash="bcb871edd134be8e1ed0a37cfbae96a9"/></dir><dir name="etc"><file name="adminhtml.xml" hash="da2d3619541c4df47c925d3921a62847"/><file name="config.xml" hash="8fee8cbb9ba10dc4bf7278ca33ee12b6"/><file name="system.xml" hash="5d58de07e777de221458f8e2e371a9f8"/></dir></dir></dir></dir></dir></target><target name="magedesign"><dir><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="template"><dir name="shoppinganalytics"><dir name="system"><dir name="config"><dir name="fieldset"><file name="hint.phtml" hash="685eedf009fc1494fd266ca93a27923a"/></dir></dir></dir></dir></dir></dir></dir></dir><dir name="frontend"><dir name="base"><dir name="default"><dir name="layout"><file name="shoppinganalytics.xml" hash="287589c95687eb245f78ab95b6492093"/></dir><dir name="template"><dir name="shoppinganalytics"><file name="sa.phtml" hash="f7a0624636886f313d5a90e1adaa2fd8"/></dir></dir></dir></dir></dir></dir></target><target name="mageetc"><dir><dir name="modules"><file name="SOAP_ShoppingAnalyics.xml" hash="356026928a86b699d9a6ff759b43f617"/></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.2.0</min><max>6.0.0</max></php></required></dependencies>
+</package>
