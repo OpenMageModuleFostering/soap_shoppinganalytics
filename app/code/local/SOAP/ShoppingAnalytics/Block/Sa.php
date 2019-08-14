@@ -120,20 +120,19 @@ class SOAP_ShoppingAnalytics_Block_Sa extends Mage_Core_Block_Template
                     $totalValue = '';
                 }
 
-                return '<!-- Google Tracking Code -->
+                return '
+<!-- Google Tracking Code -->
 <script type="text/javascript">
 /* <![CDATA[ */
-var google_conversion_id = '.$id.';
+var google_conversion_id = "'.$id.'";
 var google_conversion_language = "'.$language.'";
 var google_conversion_format = "'.$format.'";
 var google_conversion_color = "'.$colour.'";
 var google_conversion_label = "'.$label.'";
 '.$totalValue.'
-
 /* ]]> */ 
 </script>
 <script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js"></script>
-
 <noscript>
     <img height=1 width=1 border=0
     src="http://www.googleadservices.com/pagead/
@@ -141,7 +140,7 @@ var google_conversion_label = "'.$label.'";
     &label='.$label.'&script=0">
 </noscript>
 <!-- END Google Tracking Code -->
-';
+                    ';
             }
         }
     }
@@ -149,11 +148,43 @@ var google_conversion_label = "'.$label.'";
     protected function _addMicrosoftTrackingCode() {
         $domainid = Mage::getStoreConfig('shopping/mstracking/domain');
         $cp       = Mage::getStoreConfig('shopping/mstracking/cp');
-        return '
+        
+        $orderIds = $this->getOrderIds();
+        if (empty($orderIds) || !is_array($orderIds)) {
+            return;
+        }
+        $collection = Mage::getResourceModel('sales/order_collection')
+            ->addFieldToFilter('entity_id', array('in' => $orderIds))
+        ;
+        
+        foreach ($collection as $order)
+        {
+            $value = $order->getBaseGrandTotal();
+            if (!Mage::helper('shoppinganalytics')->isMicrosoftTrackingAvailable())
+            {
+                return '';
+            }
+            else {
+                $id         = Mage::getStoreConfig('shopping/tracking/account');
+                $format   = Mage::getStoreConfig('shopping/tracking/format');
+                $language   = Mage::getStoreConfig('shopping/tracking/language');
+                $colour     = Mage::getStoreConfig('shopping/tracking/colour');
+                $label      = Mage::getStoreConfig('shopping/tracking/label');
+                
+                if ($value > 0)
+                {
+                    $totalValue = 'var google_conversion_value = "'.$value.'"';
+                }
+                else {
+                    $totalValue = '';
+                }
+
+                return '
+                
 <!-- Microsoft adCenter Tracking -->
 <SCRIPT>
     microsoft_adcenterconversion_domainid = '.$domainid.';
-    microsoft_adcenterconversion_cp = '.$cp.'; 
+    microsoft_adcenterconversion_cp = 5050; 
     microsoft_adcenterconversionparams = new Array();
     microsoft_adcenterconversionparams[0] = "dedup=1";
 </SCRIPT>
@@ -161,20 +192,63 @@ var google_conversion_label = "'.$label.'";
 <NOSCRIPT>
     <IMG width=1 height=1 SRC="https://'.$domainid.'.r.msn.com/?type=1&cp=1&dedup=1"/>
 </NOSCRIPT>
-<a href="http://advertising.msn.com/MSNadCenter/LearningCenter/adtracking.asp" target="_blank">::adCenter::</a>
+<a href="http://advertising.msn.com/MSNadCenter/LearningCenter/adtracking.asp" target="_blank"></a>
 <!-- END Microsoft adCenter Tracking -->
-            
-        ';
+                    
+                ';
+            }
+        }
+    }
+
+    protected function _addAddShoppersTrackingCode() {        
+        $orderIds = $this->getOrderIds();
+        if (empty($orderIds) || !is_array($orderIds)) {
+            return;
+        }
+        $collection = Mage::getResourceModel('sales/order_collection')
+            ->addFieldToFilter('entity_id', array('in' => $orderIds))
+        ;
+        $accountId = Mage::getStoreConfig(SOAP_ShoppingAnalytics_Helper_Data::XML_PATH_ASTRACKING_ACCOUNT);
+        foreach ($collection as $order)
+        {
+            $value = $order->getBaseGrandTotal();
+            if (!Mage::helper('shoppinganalytics')->isAddShoppersTrackingAvailable())
+            {
+                return '';
+            }
+            else {
+                                
+                if ($value > 0)
+                {
+                    $totalValue = 'var google_conversion_value = "'.$value.'"';
+                }
+                else {
+                    $totalValue = '';
+                }
+
+                        return '
+<!-- AddShoppers ROI Tracking -->
+<script type="text/javascript">
+AddShoppersConversion = {
+        order_id: "'.$order->getIncrementId().'",
+        value: "'.$value.'"
+};
+var js = document.createElement("script"); js.type = "text/javascript"; js.async = true; js.id = "AddShoppers";
+js.src = ("https:" == document.location.protocol ? "https://shop.pe/widget/" : "http://cdn.shop.pe/widget/") + "widget_async.js#'.$accountId.'";
+document.getElementsByTagName("head")[0].appendChild(js);
+</script>
+<!-- END AddShoppers ROI Tracking -->
+                        
+                                ';
+            }
+        }
     }
 
     protected function _toHtml()
     {
         $output = '';
-        if (!Mage::helper('shoppinganalytics')->isShoppingAnalyticsAvailable() && !Mage::helper('shoppinganalytics')->isGoogleTrackingAvailable() 
-            && !Mage::helper('shoppinganalytics')->isMicrosoftTrackingAvailable()) {
-            return '';
-        }
-        elseif (Mage::helper('shoppinganalytics')->isShoppingAnalyticsAvailable())
+        
+        if (Mage::helper('shoppinganalytics')->isShoppingAnalyticsAvailable())
         {
             $output .= parent::_toHtml();
         }
@@ -186,6 +260,11 @@ var google_conversion_label = "'.$label.'";
         {
             $output .= $this->_addMicrosoftTrackingCode();
         }
+        
+        if ((Mage::helper('shoppinganalytics')->isAddShoppersTrackingAvailable()))
+        {
+            $output .= $this->_addAddShoppersTrackingCode();
+        } 
         
         return $output;
     }

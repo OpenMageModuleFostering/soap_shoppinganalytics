@@ -1,0 +1,16 @@
+<?php $accountId = Mage::getStoreConfig(SOAP_ShoppingAnalytics_Helper_Data::XML_PATH_ASTRACKING_ACCOUNT); ?>
+<?php if (Mage::helper('shoppinganalytics')->isAddShoppersTrackingAvailable()) : ?>
+    
+
+<!-- AddShoppers Analytics Code -->
+<script type="text/javascript">
+AddShoppersTracking = {
+image: '' // add URL for custom product image (RECOMMENDED if not using Product Schema)
+};
+var js = document.createElement('script'); js.type = 'text/javascript'; js.async = true; js.id = 'AddShoppers';
+js.src = ('https:' == document.location.protocol ? 'https://shop.pe/widget/' : 'http://cdn.shop.pe/widget/') + 'widget_async.js#<?php echo $accountId; ?>';
+document.getElementsByTagName("head")[0].appendChild(js);
+</script>
+<!-- END AddShoppers Analytics Code -->
+
+<?php endif; ?>

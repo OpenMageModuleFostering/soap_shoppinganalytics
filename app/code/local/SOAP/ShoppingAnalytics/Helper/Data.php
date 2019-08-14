@@ -32,6 +32,9 @@ class SOAP_ShoppingAnalytics_Helper_Data extends Mage_Core_Helper_Abstract
     
     const XML_PATH_MSTRACKING_ACTIVE  = 'shopping/mstracking/active';
     const XML_PATH_MSTRACKING_ACCOUNT = 'shopping/mstracking/domain';
+    
+    const XML_PATH_ASTRACKING_ACTIVE  = 'shopping/astracking/active';
+    const XML_PATH_ASTRACKING_ACCOUNT  = 'shopping/astracking/account';
 
     public function isShoppingAnalyticsAvailable($store = null)
     {
@@ -49,5 +52,11 @@ class SOAP_ShoppingAnalytics_Helper_Data extends Mage_Core_Helper_Abstract
     {
         $accountId = Mage::getStoreConfig(self::XML_PATH_MSTRACKING_ACCOUNT, $store);
         return $accountId && Mage::getStoreConfigFlag(self::XML_PATH_MSTRACKING_ACTIVE, $store);
+    }
+    
+    public function isAddShoppersTrackingAvailable($store = null)
+    {
+        $accountId = Mage::getStoreConfig(self::XML_PATH_ASTRACKING_ACCOUNT, $store);
+        return $accountId && Mage::getStoreConfigFlag(self::XML_PATH_ASTRACKING_ACTIVE, $store);
     }
 }

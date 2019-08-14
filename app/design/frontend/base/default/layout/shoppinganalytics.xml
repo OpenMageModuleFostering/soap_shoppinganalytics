@@ -23,5 +23,9 @@
         <reference name="after_body_start">
             <block type="shoppinganalytics/sa" name="shopping_analytics" as="shopping_analytics" template="shoppinganalytics/sa.phtml" />
         </reference>
+        
+        <reference name="before_body_end">
+            <block type="shoppinganalytics/saf" name="shopping_analytics_foot" as="shopping_analytics_foot" template="shoppinganalytics/safoot.phtml" />
+        </reference>
     </default>
 </layout>
