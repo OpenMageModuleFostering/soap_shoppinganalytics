@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/SOAP_ShoppingAnalytics",
+    "name": "OpenMageModuleFostering\/SOAP_ShoppingAnalytics",
     "type": "magento-module",
     "license": "GNU-General-Public-License",
     "homepage": "",
     "description": "ROI Tracker - Tracks Conversion data to third party platforms",
     "authors": [
-    {
-        "name": "Soap Media",
-        "email": "adam@soapmedia.co.uk"
-    }
-],
+        {
+            "name": "Soap Media",
+            "email": "adam@soapmedia.co.uk"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
